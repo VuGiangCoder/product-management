@@ -3,6 +3,7 @@ var salt = bcrypt.genSaltSync(10);
 var User = require("../model/userModel");
 var mongoose = require("mongoose");
 var Product = require("../model/productModel");
+var ProductType = require("../model/productTypeModel");
 
 let hashUserPassword = (password) => {
   return bcrypt.hashSync(password, salt);
@@ -61,6 +62,20 @@ var addNewProduct = async (req, res) => {
     hight: hight,
   });
   await Product.create(product);
+
+  var productType = await ProductType.findOne({
+    type: type,
+  });
+  if (productType) {
+    productType.amount = productType.amount + amount;
+    await productType.save();
+  } else {
+    var product_tmp = new ProductType({
+      type: type,
+      amount: amount,
+    });
+    await ProductType.create(product_tmp);
+  }
 };
 module.exports = {
   createNewUser,

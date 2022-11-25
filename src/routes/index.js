@@ -1,14 +1,16 @@
 var express = require("express");
 var router = express.Router();
-var userRouter = require("./users");
-var userController = require("../controller/userController");
+var adminRouter = require("./admin");
+var adminController = require("../controller/adminController");
+var factoryRouter = require("./factory");
 var { verifyToken, verifyAdmin } = require("../middleware/jwtAction");
 
 let initWebRouter = (app) => {
-  app.use("/admin", userRouter);
-  app.post("/login", userController.login);
-  app.post("/changePassword", verifyToken, userController.changePassword);
-  app.get("/forgetPassword", userController.forgetPassword);
+  app.use("/admin", adminRouter);
+  app.post("/login", adminController.login);
+  app.post("/changePassword", verifyToken, adminController.changePassword);
+  app.get("/forgetPassword", adminController.forgetPassword);
+  app.user("/factory", factoryRouter);
 };
 
 module.exports = initWebRouter;

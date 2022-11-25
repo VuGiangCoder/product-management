@@ -30,8 +30,42 @@ let verifyAdmin = (req, res, next) => {
   }
   next();
 };
+let verifyFactory = (req, res, next) => {
+  if (req.user.role != "factory") {
+    //   console.log(req.user.role);
+    return res.status(404).json({
+      message: "Bạn không có quyền truy cập",
+      errCode: 0,
+    });
+  }
+  next();
+};
+let verifyService = (req, res, next) => {
+  if (req.user.role != "service") {
+    //   console.log(req.user.role);
+    return res.status(404).json({
+      message: "Bạn không có quyền truy cập",
+      errCode: 0,
+    });
+  }
+  next();
+};
+
+let verifyAuthorizedDealer = (req, res, next) => {
+  if (req.user.role != "authorized_dealer") {
+    //   console.log(req.user.role);
+    return res.status(404).json({
+      message: "Bạn không có quyền truy cập",
+      errCode: 0,
+    });
+  }
+  next();
+};
 module.exports = {
   createJWT,
   verifyAdmin,
   verifyToken,
+  verifyAuthorizedDealer,
+  verifyFactory,
+  verifyService,
 };

@@ -6,6 +6,7 @@
     "start": "nodemon src/app.js"
   },
   "dependencies": {
+    "apexcharts": "^3.36.3",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",

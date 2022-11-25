@@ -7,6 +7,7 @@ var { createJWT } = require("../middleware/jwtAction");
 var bcrypt = require("bcryptjs");
 var salt = bcrypt.genSaltSync(10);
 var generator = require("generate-password");
+var ProductType = require("../model/productTypeModel");
 
 let login = async (req, res) => {
   let check = await crudService.signIn(req);
@@ -33,6 +34,7 @@ let login = async (req, res) => {
 
 let createUser = async (req, res) => {
   try {
+    console.log(req.cookies);
     var user = await User.findOne({
       email: req.body.email,
     });
@@ -161,7 +163,7 @@ let forgetPassword = async (req, res) => {
   let password = await crudService.hashUserPassword(newPassword);
   if (user) {
     user.password = password;
-    await user.save(0);
+    await user.save();
     var html = `<h3>BigCorp</h3><p><b>BigCorp xin thông báo: </b>Mật khẩu mới của đối tác là: <b>${newPassword}</b>. Hãy bảo mật thông tin này.</p>`;
     sendMail(email, "Quên mật khẩu", html);
   }
@@ -171,6 +173,40 @@ let forgetPassword = async (req, res) => {
   });
 };
 
+let getProductType = async (req, res) => {
+  var productTypeArr = [];
+  var i = 0;
+  var productTypes = await ProductType.find({}).select([
+    "type",
+    "amount",
+    "-_id",
+  ]);
+  productTypes.forEach(function (productType) {
+    productTypeArr[i] = productType;
+    i++;
+  });
+  return res.status(200).json({
+    message: "Các loại sản phẩm",
+    errCode: 0,
+    payload: {
+      productTypes: productTypeArr,
+    },
+  });
+};
+let test = async (req, res) => {
+  const start = new Date(2022, 10, 1); // trừ 1 vào tháng
+  const end = new Date(2022, 10, 30);
+  var products = await Product.find({
+    name: "xe đồ chơi",
+    createAt: {
+      $gte: start,
+      $lte: end,
+    },
+  }).count();
+  var users = await User.find({}).count();
+  console.log(users);
+  console.log(products);
+};
 module.exports = {
   login,
   createUser,
@@ -179,4 +215,6 @@ module.exports = {
   createProduct,
   findAllProduct,
   forgetPassword,
+  getProductType,
+  test,
 };
