@@ -6,6 +6,7 @@ var logger = require("morgan");
 require("dotenv").config();
 var connectDB = require("./config/connectDB");
 var initWebRouter = require("./routes/index");
+require("dotenv").config();
 
 var app = express();
 // view engine setup
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+console.log(process.env.uri);
 connectDB();
 initWebRouter(app);
 

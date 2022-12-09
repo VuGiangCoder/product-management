@@ -2,8 +2,6 @@ var bcrypt = require("bcryptjs");
 var salt = bcrypt.genSaltSync(10);
 var User = require("../model/userModel");
 var mongoose = require("mongoose");
-var Product = require("../model/productModel");
-var ProductType = require("../model/productTypeModel");
 
 let hashUserPassword = (password) => {
   return bcrypt.hashSync(password, salt);
@@ -39,47 +37,47 @@ let signIn = async (req, res) => {
     }
   }
 };
-var addNewProduct = async (req, res) => {
-  var {
-    name,
-    type,
-    date_of_manufacture,
-    quarranty_period,
-    amount,
-    color,
-    weight,
-    hight,
-  } = req.body;
+// var addNewProduct = async (req, res) => {
+//   var {
+//     name,
+//     type,
+//     date_of_manufacture,
+//     quarranty_period,
+//     amount,
+//     color,
+//     weight,
+//     hight,
+//   } = req.body;
 
-  var product = new Product({
-    name: name,
-    type: type,
-    date_of_manufacture: date_of_manufacture,
-    quarranty_period: quarranty_period,
-    amount: amount,
-    color: color,
-    weight: weight,
-    hight: hight,
-  });
-  await Product.create(product);
+//   var product = new Product({
+//     name: name,
+//     type: type,
+//     date_of_manufacture: date_of_manufacture,
+//     quarranty_period: quarranty_period,
+//     amount: amount,
+//     color: color,
+//     weight: weight,
+//     hight: hight,
+//   });
+//   await Product.create(product);
 
-  var productType = await ProductType.findOne({
-    type: type,
-  });
-  if (productType) {
-    productType.amount = productType.amount + amount;
-    await productType.save();
-  } else {
-    var product_tmp = new ProductType({
-      type: type,
-      amount: amount,
-    });
-    await ProductType.create(product_tmp);
-  }
-};
+//   var productType = await ProductType.findOne({
+//     type: type,
+//   });
+//   if (productType) {
+//     productType.amount = productType.amount + amount;
+//     await productType.save();
+//   } else {
+//     var product_tmp = new ProductType({
+//       type: type,
+//       amount: amount,
+//     });
+//     await ProductType.create(product_tmp);
+//   }
+// };
 module.exports = {
   createNewUser,
   signIn,
   hashUserPassword,
-  addNewProduct,
+  //addNewProduct,
 };

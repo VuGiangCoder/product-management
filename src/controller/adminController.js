@@ -1,13 +1,13 @@
 var mongoose = require("mongoose");
 var User = require("../model/userModel");
-var Product = require("../model/productModel");
+var Product = require("../model/productseriModel");
 var crudService = require("../service/crudService");
 var sendMail = require("../service/sendMail");
 var { createJWT } = require("../middleware/jwtAction");
 var bcrypt = require("bcryptjs");
 var salt = bcrypt.genSaltSync(10);
 var generator = require("generate-password");
-var ProductType = require("../model/productTypeModel");
+require("dotenv").config();
 
 let login = async (req, res) => {
   let check = await crudService.signIn(req);
@@ -63,7 +63,7 @@ let createUser = async (req, res) => {
 let deleteUser = async (req, res) => {
   try {
     await User.deleteOne({
-      email: "giang2010gc@gmail.com",
+      email: req.body.email,
     });
     return res.status(200).json({
       message: "Xoá tài khoản thành công",
@@ -111,45 +111,48 @@ let changePassword = async (req, res) => {
   }
 };
 
-let createProduct = async (req, res) => {
-  try {
-    await crudService.addNewProduct(req);
-    var html = `<h3>BigCorp</h3><p><b>BigCorp xin thông báo:</b> Chúng tôi vừa ra mắt mặt hàng mới, hãy ghé thăm để được hưởng nhiều ưu đã nhé cả nhà.</p>`;
-    var emails = await User.find({}).select(["email", "-_id"]);
-    emails.forEach(async function (email) {
-      sendMail(email, "New product", html);
-    });
+// let createProduct = async (req, res) => {
+//   try {
+//     await crudService.addNewProduct(req);
+//     var html = `<h3>BigCorp</h3><p><b>BigCorp xin thông báo:</b> Chúng tôi vừa ra mắt mặt hàng mới, hãy ghé thăm để được hưởng nhiều ưu đã nhé cả nhà.</p>`;
+//     var emails = await User.find({}).select(["email", "-_id"]);
+//     emails.forEach(async function (email) {
+//       sendMail(email, "New product", html);
+//     });
 
-    return res.status(200).json({
-      message: "Thêm sản phẩm mới thành công",
-      errCode: 0,
-    });
-  } catch (error) {}
-};
+//     return res.status(200).json({
+//       message: "Thêm sản phẩm mới thành công",
+//       errCode: 0,
+//     });
+//   } catch (error) {}
+// };
 
-let findAllProduct = async (req, res) => {
+let getAllProductName = async (req, res) => {
   var page = req.body.page;
   var size = req.body.size;
   var productArr = [];
   var i = 0;
-  var products = await Product.find({})
-    .select(["name", "type", "_id", "count"])
-    .skip((page - 1) * size)
-    .limit(size);
-  products.forEach(function (product) {
-    productArr[i] = product;
-    i++;
-  });
-  return res.status(200).json({
-    message: "Danh sách sản phẩm",
-    errCode: 0,
-    payload: {
-      page: page,
-      size: size,
-      totalpage: 4,
-      products: productArr,
-    },
-  });
+  try {
+    var products = await Product.find({})
+      .skip((page - 1) * size)
+      .limit(size);
+    products.forEach(function (product) {
+      productArr[i] = product;
+      i++;
+    });
+    return res.status(200).json({
+      message: "Danh sách sản phẩm",
+      errCode: 0,
+      payload: {
+        page: page,
+        size: size,
+        totalpage: 4,
+        products: productArr,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 let forgetPassword = async (req, res) => {
   var email = req.body.email;
@@ -172,49 +175,30 @@ let forgetPassword = async (req, res) => {
     errCode: 0,
   });
 };
-
-let getProductType = async (req, res) => {
-  var productTypeArr = [];
-  var i = 0;
-  var productTypes = await ProductType.find({}).select([
-    "type",
-    "amount",
-    "-_id",
-  ]);
-  productTypes.forEach(function (productType) {
-    productTypeArr[i] = productType;
-    i++;
-  });
-  return res.status(200).json({
-    message: "Các loại sản phẩm",
-    errCode: 0,
-    payload: {
-      productTypes: productTypeArr,
-    },
-  });
-};
 let test = async (req, res) => {
-  const start = new Date(2022, 10, 1); // trừ 1 vào tháng
-  const end = new Date(2022, 10, 30);
-  var products = await Product.find({
-    name: "xe đồ chơi",
-    createAt: {
-      $gte: start,
-      $lte: end,
-    },
-  }).count();
-  var users = await User.find({}).count();
-  console.log(users);
-  console.log(products);
+  // const start = new Date(2022, 10, 1); // trừ 1 vào tháng
+  // const end = new Date(2022, 10, 30);
+  // var products = await Product.find({
+  //   name: "xe đồ chơi",
+  //   createAt: {
+  //     $gte: start,
+  //     $lte: end,
+  //   },
+  // }).count();
+  // var users = await User.find({}).count();
+  // console.log(users);
+  // console.log(products);
+  // const user = await User.findOne({
+  //   _id: "637c278b6f526b7e24050865",
+  // });
+  console.log(process.env.port);
 };
 module.exports = {
   login,
   createUser,
   deleteUser,
   changePassword,
-  createProduct,
-  findAllProduct,
   forgetPassword,
-  getProductType,
+  getAllProductName,
   test,
 };

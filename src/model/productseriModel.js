@@ -1,28 +1,35 @@
 var mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
-const userSchema = new mongoose.Schema(
+const productseriSchema = new mongoose.Schema(
   {
     // _id: mongoose.Schema.Types.ObjectId,
-    email: {
-      type: String,
-      required: true,
-    },
-    password: {
+    modelname: {
       type: String,
       required: true,
     },
     name: {
       type: String,
-      require: true,
+      required: true,
     },
-    role: {
+    type: {
       type: String,
       require: true,
-      enum: ["admin", "service", "authorized_dealer", "factory", "customer"],
     },
-    address: {
+    color: {
       type: String,
+      require: true,
+    },
+    weight: {
+      type: String,
+      require: true,
+    },
+    height: {
+      type: String,
+      require: true,
+    },
+    expiry: {
+      type: Number,
       require: true,
     },
   },
@@ -33,4 +40,4 @@ const userSchema = new mongoose.Schema(
     },
   }
 );
-module.exports = mongoose.model("users", userSchema);
+module.exports = mongoose.model("productseris", productseriSchema);

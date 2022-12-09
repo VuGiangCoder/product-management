@@ -1,22 +1,18 @@
 var mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
-const userSchema = new mongoose.Schema(
+const userprofileSchema = new mongoose.Schema(
   {
     // _id: mongoose.Schema.Types.ObjectId,
-    email: {
-      type: String,
-      required: true,
-    },
-    password: {
+    userid: {
       type: String,
       required: true,
     },
     name: {
       type: String,
-      require: true,
+      required: true,
     },
-    role: {
+    userrole: {
       type: String,
       require: true,
       enum: ["admin", "service", "authorized_dealer", "factory", "customer"],
@@ -33,4 +29,4 @@ const userSchema = new mongoose.Schema(
     },
   }
 );
-module.exports = mongoose.model("users", userSchema);
+module.exports = mongoose.model("userprofiles", userprofileSchema);
