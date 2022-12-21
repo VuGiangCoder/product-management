@@ -1,15 +1,15 @@
-#ProductionMove
+# ProductionMove
 
 ProductionMove là phần mềm được BigCorp sử dụng để theo dõi vòng đời các sản phẩm của họ. Các cơ sở sản xuất, đại lý phân phối, trung tâm bảo hành đều sử dụng ProductionMove để cộng tác trong việc phân phối và theo dõi vòng đời của sản phẩm.
 Vai trò của các bên tham gia như sau:
 
-###Ban điều hành BigCorp
+### Ban điều hành BigCorp
 
 - Quản lý danh mục dòng sản phẩm.
 - Cấp tài khoản và quản lý danh mục các cơ sở sản xuất, đại lý phân phối và trung tâm bảo hành.
 - Theo dõi và xem thống kê sản phẩm trên toàn quốc, theo trạng thái và theo cơ sở sản xuất, đại lý phân phối và trung tâm bảo hành.
 
-###Cơ sở sản xuất
+### Cơ sở sản xuất
 
 - Nhập các lô sản phẩm mới vừa sản xuất vào kho.
 - Xuất sản phẩm cho đại lý.
@@ -18,7 +18,7 @@ Vai trò của các bên tham gia như sau:
 - Thống kê và phân tích số lượng sản phẩm bán ra hàng tháng, quý, năm.
 - Thống kê tỉ lệ sản phẩm bị lỗi theo dòng sản phẩm, cơ sở sản xuất, đại lý phân phối.
 
-###Đại lý phân phối
+### Đại lý phân phối
 
 - Nhập sản phẩm mới về từ cơ sở sản xuất. Sản phẩm nhập về được lưu tại kho (riêng, nội bộ) của đại lý.
 - Bán sản phẩm cho khách hàng
@@ -29,7 +29,7 @@ Vai trò của các bên tham gia như sau:
 - Thống kê và báo cáo số liệu sản phẩm theo từng loại (trạng thái liên), theo tháng, quý, năm.
 - Thống kê và phân tích số lượng sản phẩm bán ra hàng tháng, quý, năm.
 
-###Trung tâm bảo hành
+### Trung tâm bảo hành
 
 - Nhận các sản phẩm bảo hành hoặc triệu hồi từ đại lý.
 - Trả sản phẩm đã sửa chữa xong cho đại lý.
