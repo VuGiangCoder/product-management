@@ -1,9 +1,8 @@
 var mongoose = require("mongoose");
-
+require("dotenv").config();
 let connectDB = async () => {
   try {
-    var uri =
-      "mongodb+srv://product:giang123abc@productmanagerment.7zjdagl.mongodb.net/productmanagerment";
+    var uri = process.env.uri;
 
     await mongoose.connect(uri, {
       useNewUrlParser: true,

@@ -12,6 +12,10 @@ const productseriSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    userid: {
+      type: String,
+      required: true,
+    },
     type: {
       type: String,
       require: true,
