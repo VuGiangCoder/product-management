@@ -51,7 +51,7 @@ let verifyService = (req, res, next) => {
   next();
 };
 
-let verifyAuthorizedDealer = (req, res, next) => {
+let verifyStore = (req, res, next) => {
   if (req.user.role != "authorized_dealer") {
     //   console.log(req.user.role);
     return res.status(404).json({
@@ -65,7 +65,7 @@ module.exports = {
   createJWT,
   verifyAdmin,
   verifyToken,
-  verifyAuthorizedDealer,
+  verifyStore,
   verifyFactory,
   verifyService,
 };

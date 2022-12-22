@@ -4,18 +4,17 @@ mongoose.Promise = global.Promise;
 const producthistorySchema = new mongoose.Schema(
   {
     // _id: mongoose.Schema.Types.ObjectId,
-    userid: {
+    userinid: {
+      type: String,
+      required: true,
+    },
+    useroutid: {
       type: String,
       required: true,
     },
     modelname: {
       type: String,
       required: true,
-    },
-    userrole: {
-      type: String,
-      require: true,
-      enum: ["admin", "service", "authorized_dealer", "factory", "customer"],
     },
     inout: {
       type: String,
@@ -25,11 +24,6 @@ const producthistorySchema = new mongoose.Schema(
     quantity: {
       type: Number,
       require: true,
-    },
-    amount: {
-      type: Number,
-      require: true,
-      default: 0,
     },
     status: {
       type: Number,

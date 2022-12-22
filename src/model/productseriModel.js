@@ -6,7 +6,6 @@ const productseriSchema = new mongoose.Schema(
     // _id: mongoose.Schema.Types.ObjectId,
     modelname: {
       type: String,
-      required: true,
     },
     name: {
       type: String,
@@ -35,6 +34,11 @@ const productseriSchema = new mongoose.Schema(
     expiry: {
       type: Number,
       require: true,
+    },
+    amount: {
+      type: Number,
+      require: true,
+      default: 0,
     },
   },
   {

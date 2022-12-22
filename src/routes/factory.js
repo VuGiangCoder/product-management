@@ -9,11 +9,11 @@ router.post(
   //verifyFactory,
   factoryController.importProduct
 );
-router.post(
-  "/products/export",
-  verifyToken,
-  verifyFactory,
-  factoryController.exportProduct
-);
-router.get("/products", factoryController.getAllModelName);
+// router.post(
+//   "/products/export",
+//   verifyToken,
+//   verifyFactory,
+//   factoryController.exportProduct
+// );
+router.get("/products", verifyToken, factoryController.getAllModelName);
 module.exports = router;
