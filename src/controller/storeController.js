@@ -7,6 +7,17 @@ const crud = require("../service/crudService");
 
 let importProduct = async (req, res) => {
   await crud.importProduct(req);
+  return res.json({
+    message: "thêm mặt hàng thành công",
+    errCode: 0,
+  });
+};
+let sellProduct = async (req, res) => {
+  await crud.exportProduct(req);
+  return res.json({
+    message: "Bán mặt hàng thành công",
+    errCode: 0,
+  });
 };
 
 let getAllModelName = async (req, res) => {
@@ -31,4 +42,5 @@ let getAllModelName = async (req, res) => {
 module.exports = {
   importProduct,
   getAllModelName,
+  sellProduct,
 };

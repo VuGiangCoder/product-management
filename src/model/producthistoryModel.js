@@ -16,11 +16,6 @@ const producthistorySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    inout: {
-      type: String,
-      require: true,
-      enum: ["in", "out"],
-    },
     quantity: {
       type: Number,
       require: true,

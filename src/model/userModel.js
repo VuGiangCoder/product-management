@@ -1,12 +1,14 @@
 var mongoose = require("mongoose");
+const autoIncrement = require("mongoose-auto-increment");
 mongoose.Promise = global.Promise;
-
+autoIncrement.initialize(mongoose.connection);
 const userSchema = new mongoose.Schema(
   {
     // _id: mongoose.Schema.Types.ObjectId,
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     password: {
       type: String,
@@ -19,7 +21,7 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       require: true,
-      enum: ["admin", "service", "authorized_dealer", "factory", "customer"],
+      enum: ["admin", "service", "store", "factory", "customer"],
     },
     address: {
       type: String,
@@ -33,4 +35,11 @@ const userSchema = new mongoose.Schema(
     },
   }
 );
+userSchema.plugin(autoIncrement.plugin, {
+  model: "users",
+  field: "_id",
+  startAt: 1,
+  incrementBy: 1,
+});
+
 module.exports = mongoose.model("users", userSchema);

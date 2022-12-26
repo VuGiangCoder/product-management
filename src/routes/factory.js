@@ -6,7 +6,7 @@ var { verifyToken, verifyFactory } = require("../middleware/jwtAction");
 router.post(
   "/products/create",
   verifyToken,
-  //verifyFactory,
+  verifyFactory,
   factoryController.importProduct
 );
 // router.post(

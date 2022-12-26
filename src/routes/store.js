@@ -11,5 +11,11 @@ router.post(
   verifyStore,
   storeController.importProduct
 );
+router.post(
+  "/products/sell",
+  verifyToken,
+  verifyStore,
+  storeController.sellProduct
+);
 
 module.exports = router;

@@ -8,11 +8,10 @@ const crud = require("../service/crudService");
 let importProduct = async (req, res) => {
   await crud.importProduct(req);
   return res.status(200).json({
-    message: "Thêm sản phẩm thành công",
+    message: "Lấy sản phẩm lỗi thành công",
     errCode: 0,
   });
 };
-
 let getAllModelName = async (req, res) => {
   var page = req.body.page;
   var size = req.body.size;

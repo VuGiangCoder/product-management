@@ -62,7 +62,6 @@ let importProduct = async (req) => {
     userinid: data.id,
     useroutid: useroutid,
     modelname: modelname,
-    inout: "in",
     quantity: quantity,
     status: status,
   });
@@ -103,9 +102,65 @@ let importProduct = async (req) => {
   productseriouttmp.amount = productseriouttmp.amount - quantity;
   await productseriouttmp.save();
 };
+let exportProduct = async (req) => {
+  var data = jwt.verify(req.cookies.token, process.env.secret);
+  var modelname = req.body.modelname;
+  var userinid = req.body.userinid;
+  var name = req.body.name;
+  var type = req.body.type;
+  var color = req.body.color;
+  var weight = req.body.weight;
+  var height = req.body.height;
+  var expiry = req.body.expiry;
+  var quantity = req.body.quantity;
+  var status = req.body.status;
+
+  var producthistorymodel = await ProductHistoryModel.findOne({
+    userinid: data.id,
+    modelname: modelname,
+  });
+  var producthistorytmp = new ProductHistoryModel({
+    userinid: userinid,
+    useroutid: data.id,
+    modelname: modelname,
+    quantity: quantity,
+    status: status,
+  });
+  await ProductHistoryModel.create(producthistorytmp);
+
+  if (producthistorymodel == null) {
+    var productserimodel = await ProductSeriModel.findOne({
+      userid: data.id,
+      modelname: modelname,
+    });
+    if (productserimodel == null) {
+      var product = new ProductSeriModel({
+        modelname: modelname,
+        name: name,
+        userid: data.id,
+        type: type,
+        color: color,
+        weight: weight,
+        height: height,
+        expiry: expiry,
+        amount: quantity,
+      });
+      await ProductSeriModel.create(product);
+    } else {
+    }
+  } else {
+  }
+  var productseriouttmp = await ProductSeriModel.findOne({
+    userid: data.id,
+    modelname: modelname,
+  });
+  productseriouttmp.amount = productseriouttmp.amount - quantity;
+  await productseriouttmp.save();
+};
 module.exports = {
   createNewUser,
   signIn,
   hashUserPassword,
   importProduct,
+  exportProduct,
 };
