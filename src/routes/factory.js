@@ -9,11 +9,35 @@ router.post(
   verifyFactory,
   factoryController.importProduct
 );
-// router.post(
-//   "/products/export",
-//   verifyToken,
-//   verifyFactory,
-//   factoryController.exportProduct
-// );
-router.get("/products", verifyToken, factoryController.getAllModelName);
+router.get(
+  "/products",
+  verifyToken,
+  verifyFactory,
+  factoryController.getAllModelName
+);
+router.get(
+  "/products/history",
+  verifyToken,
+  verifyFactory,
+  factoryController.getProductHistory
+);
+
+router.get(
+  "/products/product-in-month",
+  verifyToken,
+  verifyFactory,
+  factoryController.getProductInMonth
+);
+router.get(
+  "/products/product-in-year",
+  verifyToken,
+  verifyFactory,
+  factoryController.getProductInYear
+);
+router.get(
+  "/products/product-in-quarter",
+  verifyToken,
+  verifyFactory,
+  factoryController.getProductInQuarterly
+);
 module.exports = router;

@@ -52,8 +52,7 @@ let verifyService = (req, res, next) => {
 };
 
 let verifyStore = (req, res, next) => {
-  if (req.user.role != "authorized_dealer") {
-    //   console.log(req.user.role);
+  if (req.user.role != "store") {
     return res.status(404).json({
       message: "Bạn không có quyền truy cập",
       errCode: 0,

@@ -1,10 +1,9 @@
 var express = require("express");
 var router = express.Router();
-var factoryController = require("../controller/factoryController");
 var storeController = require("../controller/storeController");
 var { verifyToken, verifyStore } = require("../middleware/jwtAction");
 
-router.get("/products", verifyToken, factoryController.getAllModelName);
+router.get("/products", verifyToken, storeController.getAllModelName);
 router.post(
   "/products/create",
   verifyToken,
@@ -16,6 +15,31 @@ router.post(
   verifyToken,
   verifyStore,
   storeController.sellProduct
+);
+router.get("/test", storeController.getProductMonth);
+router.get(
+  "/products/history",
+  verifyToken,
+  verifyStore,
+  storeController.getProductHistory
+);
+router.get(
+  "/products/product-in-month",
+  verifyToken,
+  verifyStore,
+  storeController.getProductInMonth
+);
+router.get(
+  "/products/product-in-year",
+  verifyToken,
+  verifyStore,
+  storeController.getProductInYear
+);
+router.get(
+  "/products/product-in-quarter",
+  verifyToken,
+  verifyStore,
+  storeController.getProductInQuarterly
 );
 
 module.exports = router;

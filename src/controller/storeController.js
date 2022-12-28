@@ -39,8 +39,30 @@ let getAllModelName = async (req, res) => {
     },
   });
 };
+let getProductMonth = async (req, res) => {
+  var month = req.body.month;
+  var year = req.body.year;
+};
+
+let getProductHistory = async (req, res) => {
+  crud.getProductHistory(req, res);
+};
+let getProductInMonth = async (req, res) => {
+  await crud.getProductInMonth(req, res);
+};
+let getProductInYear = async (req, res) => {
+  await crud.getProductInYear(req, res);
+};
+let getProductInQuarterly = async (req, res) => {
+  await crud.getProductInQuarterly(req, res);
+};
 module.exports = {
   importProduct,
   getAllModelName,
   sellProduct,
+  getProductMonth,
+  getProductHistory,
+  getProductInMonth,
+  getProductInYear,
+  getProductInQuarterly,
 };
