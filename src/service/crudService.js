@@ -197,7 +197,6 @@ let getProductInMonth = async (req, res) => {
 let getProductInYear = async (req, res) => {
   var data = jwt.verify(req.cookies.token, process.env.secret);
   var year = req.body.year;
-  var month = req.body.month;
   var status = req.body.status;
   var count = await ProductHistoryModel.find({
     userinid: data.id,
@@ -233,6 +232,65 @@ let getProductInQuarterly = async (req, res) => {
     amount: count,
   });
 };
+let getProductOutMonth = async (req, res) => {
+  var data = jwt.verify(req.cookies.token, process.env.secret);
+  var year = req.body.year;
+  var month = req.body.month;
+  var status = req.body.status;
+
+  var count = await ProductHistoryModel.find({
+    useroutid: data.id,
+    createAt: {
+      $gte: new Date(year, month - 1, 1),
+      $lte: new Date(year, month, 1),
+    },
+    status: status,
+  }).count();
+  return res.json({
+    errCode: 0,
+    year: year,
+    month: month,
+    amount: count,
+  });
+};
+let getProductOutYear = async (req, res) => {
+  var data = jwt.verify(req.cookies.token, process.env.secret);
+  var year = req.body.year;
+  var status = req.body.status;
+  var count = await ProductHistoryModel.find({
+    useroutid: data.id,
+    createAt: {
+      $gte: new Date(year, 1, 1),
+      $lte: new Date(year + 1, 1, 1),
+    },
+    status: status,
+  }).count();
+  return res.json({
+    errCode: 0,
+    year: year,
+    amount: count,
+  });
+};
+let getProductOutQuarterly = async (req, res) => {
+  var data = jwt.verify(req.cookies.token, process.env.secret);
+  var year = req.body.year;
+  var quarter = req.body.quarter;
+  var status = req.body.status;
+  var count = await ProductHistoryModel.find({
+    useroutid: data.id,
+    createAt: {
+      $gte: new Date(year, (quarter - 1) * 3, 1),
+      $lte: new Date(year, quarter * 3 + 1, 1),
+    },
+    status: status,
+  }).count();
+  return res.json({
+    errCode: 0,
+    year: year,
+    quater: quarter,
+    amount: count,
+  });
+};
 module.exports = {
   createNewUser,
   signIn,
@@ -243,4 +301,7 @@ module.exports = {
   getProductInMonth,
   getProductInYear,
   getProductInQuarterly,
+  getProductOutMonth,
+  getProductOutYear,
+  getProductOutQuarterly,
 };

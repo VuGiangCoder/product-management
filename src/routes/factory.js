@@ -40,4 +40,22 @@ router.get(
   verifyFactory,
   factoryController.getProductInQuarterly
 );
+router.get(
+  "/products/product-out-month",
+  verifyToken,
+  verifyFactory,
+  factoryController.getProductOutMonth
+);
+router.get(
+  "/products/product-out-year",
+  verifyToken,
+  verifyFactory,
+  factoryController.getProductOutYear
+);
+router.get(
+  "/products/product-out-quarter",
+  verifyToken,
+  verifyFactory,
+  factoryController.getProductOutQuarterly
+);
 module.exports = router;

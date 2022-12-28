@@ -41,5 +41,23 @@ router.get(
   verifyStore,
   storeController.getProductInQuarterly
 );
+router.get(
+  "/products/product-out-month",
+  verifyToken,
+  verifyStore,
+  storeController.getProductInMonth
+);
+router.get(
+  "/products/product-out-year",
+  verifyToken,
+  verifyStore,
+  storeController.getProductInYear
+);
+router.get(
+  "/products/product-out-quarter",
+  verifyToken,
+  verifyStore,
+  storeController.getProductInQuarterly
+);
 
 module.exports = router;

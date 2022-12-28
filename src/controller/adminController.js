@@ -175,24 +175,6 @@ let forgetPassword = async (req, res) => {
     errCode: 0,
   });
 };
-let test = async (req, res) => {
-  // const start = new Date(2022, 10, 1); // trừ 1 vào tháng
-  // const end = new Date(2022, 10, 30);
-  // var products = await Product.find({
-  //   name: "xe đồ chơi",
-  //   createAt: {
-  //     $gte: start,
-  //     $lte: end,
-  //   },
-  // }).count();
-  // var users = await User.find({}).count();
-  // console.log(users);
-  // console.log(products);
-  // const user = await User.findOne({
-  //   _id: "637c278b6f526b7e24050865",
-  // });
-  console.log(process.env.port);
-};
 module.exports = {
   login,
   createUser,
@@ -200,5 +182,4 @@ module.exports = {
   changePassword,
   forgetPassword,
   getAllProductName,
-  test,
 };

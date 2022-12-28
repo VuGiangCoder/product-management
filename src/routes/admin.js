@@ -11,5 +11,4 @@ router.get(
   verifyAdmin,
   adminController.getAllProductName
 );
-router.get("/abc", verifyToken, verifyAdmin, adminController.test);
 module.exports = router;
