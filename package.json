@@ -6,6 +6,7 @@
     "start": "set NODE_ENV=development && nodemon src/app.js"
   },
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "apexcharts": "^3.36.3",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",

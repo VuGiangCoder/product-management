@@ -2,7 +2,7 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
 let createJWT = (id, email, role) => {
-  let token = jwt.sign({ id, email, role }, "bigcorpsky");
+  let token = jwt.sign({ id, email, role }, process.env.secret);
   console.log(token);
   return token;
 };
@@ -15,7 +15,7 @@ let verifyToken = (req, res, next) => {
     });
   } else {
     console.log(token);
-    let data = jwt.verify(token, "bigcorpsky");
+    let data = jwt.verify(token, process.env.secret);
     req.user = data;
     next();
   }
