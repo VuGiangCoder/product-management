@@ -6,9 +6,11 @@ var logger = require("morgan");
 require("dotenv").config();
 var connectDB = require("./config/connectDB");
 var initWebRouter = require("./routes/index");
+var csrf = require("csurf");
 require("dotenv").config();
 
 var app = express();
+app.use(csrf());
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
