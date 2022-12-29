@@ -6,9 +6,16 @@ var logger = require("morgan");
 require("dotenv").config();
 var connectDB = require("./config/connectDB");
 var initWebRouter = require("./routes/index");
-require("dotenv").config();
+var cors = require("cors");
 
 var app = express();
+
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    credentials: true,
+  })
+);
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
