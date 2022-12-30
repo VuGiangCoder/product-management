@@ -111,6 +111,15 @@ let changePassword = async (req, res) => {
   }
 };
 
+let getAllUser = async (req, res) => {
+  var users = await User.find({
+    role: { $ne: "admin" },
+  }).select(["_id", "email", "role"]);
+  return res.json({
+    errCode: 0,
+    payload: users,
+  });
+};
 // let createProduct = async (req, res) => {
 //   try {
 //     await crudService.addNewProduct(req);
@@ -182,4 +191,5 @@ module.exports = {
   changePassword,
   forgetPassword,
   getAllProductName,
+  getAllUser,
 };

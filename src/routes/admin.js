@@ -11,4 +11,5 @@ router.get(
   verifyAdmin,
   adminController.getAllProductName
 );
+router.get("/users", verifyToken, verifyAdmin, adminController.getAllUser);
 module.exports = router;
