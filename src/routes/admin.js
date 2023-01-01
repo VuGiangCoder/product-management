@@ -11,5 +11,13 @@ router.get(
   verifyAdmin,
   adminController.getAllProductName
 );
+router.get(
+  "/products/get-amount-position",
+  verifyToken,
+  verifyAdmin,
+  adminController.getAmountOfRole
+);
+router.get("/products/getProductMonth", adminController.getProductMonth);
+router.get("/products/getProductYear", adminController.getProductYear);
 router.get("/users", verifyToken, verifyAdmin, adminController.getAllUser);
 module.exports = router;

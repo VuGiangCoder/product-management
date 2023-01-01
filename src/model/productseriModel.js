@@ -12,7 +12,7 @@ const productseriSchema = new mongoose.Schema(
       required: true,
     },
     userid: {
-      type: String,
+      type: Number,
       required: true,
     },
     type: {

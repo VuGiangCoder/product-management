@@ -24,7 +24,7 @@ let createNewUser = async (req) => {
   await User.create(user);
 };
 let signIn = async (req, res) => {
-  console.log(req.body);
+  //console.log(req.body);
   let user = await User.findOne({
     email: req.body.email,
   });

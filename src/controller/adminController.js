@@ -1,6 +1,8 @@
 var mongoose = require("mongoose");
 var User = require("../model/userModel");
 var Product = require("../model/productseriModel");
+var ProductHis = require("../model/producthistoryModel");
+
 var crudService = require("../service/crudService");
 var sendMail = require("../service/sendMail");
 var { createJWT } = require("../middleware/jwtAction");
@@ -184,6 +186,112 @@ let forgetPassword = async (req, res) => {
     errCode: 0,
   });
 };
+let getAmountOfRole = async (req, res) => {
+  var month = req.body.month;
+  var year = req.body.year;
+  var amountFactory = 0;
+  var amountStore = 0;
+  var amountService = 0;
+  var i = 0;
+  var j = 0;
+  var k = 0;
+  var userFactoryArr = [];
+  var userServiceArr = [];
+  var userStoreArr = [];
+
+  var users = await User.find({});
+  users.forEach(async function (user) {
+    var role = user.get("role");
+    var id = user.get("_id");
+    if (role == "factory") {
+      userFactoryArr[i] = id;
+      i++;
+    }
+    if (role == "store") {
+      userStoreArr[j] = id;
+      j++;
+    }
+    if (role == "service") {
+      userServiceArr[k] = id;
+      k++;
+    }
+  });
+  for (m = 0; m < i; m++) {
+    var productFactory = await Product.find({
+      userid: userFactoryArr[m],
+    });
+    productFactory.forEach(async function (product) {
+      var amount = product.get("amount");
+      amountFactory += amount;
+    });
+  }
+  for (m = 0; m < j; m++) {
+    var productStore = await Product.find({
+      userid: userStoreArr[m],
+    });
+    productStore.forEach(async function (product) {
+      var amount = product.get("amount");
+      amountStore += amount;
+    });
+  }
+  for (m = 0; m < k; m++) {
+    var productService = await Product.find({
+      userid: userServiceArr[m],
+    });
+    productService.forEach(async function (product) {
+      var amount = product.get("amount");
+      amountService += amount;
+    });
+  }
+
+  return res.status(200).json({
+    factory: amountFactory,
+    store: amountStore,
+    service: amountService,
+  });
+};
+let getProductMonth = async (req, res) => {
+  var year = req.body.year;
+  var month = req.body.month;
+
+  var amount = 0;
+  var products = await ProductHis.find({
+    status: 1,
+    createAt: {
+      $gte: new Date(year, month - 1, 1),
+      $lte: new Date(year, month, 1),
+    },
+  });
+  products.forEach(async function (product) {
+    var quantity = product.get("quantity");
+    amount += quantity;
+  });
+  return res.json({
+    year: year,
+    month: month,
+    amount: amount,
+  });
+};
+let getProductYear = async (req, res) => {
+  var year = req.body.year;
+
+  var amount = 0;
+  var products = await ProductHis.find({
+    status: 1,
+    createAt: {
+      $gte: new Date(year, 1, 1),
+      $lte: new Date(year + 1, 1, 1),
+    },
+  });
+  products.forEach(async function (product) {
+    var quantity = product.get("quantity");
+    amount += quantity;
+  });
+  return res.json({
+    year: year,
+    amount: amount,
+  });
+};
 module.exports = {
   login,
   createUser,
@@ -192,4 +300,7 @@ module.exports = {
   forgetPassword,
   getAllProductName,
   getAllUser,
+  getAmountOfRole,
+  getProductMonth,
+  getProductYear,
 };
