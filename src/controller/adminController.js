@@ -187,8 +187,6 @@ let forgetPassword = async (req, res) => {
   });
 };
 let getAmountOfRole = async (req, res) => {
-  var month = req.body.month;
-  var year = req.body.year;
   var amountFactory = 0;
   var amountStore = 0;
   var amountService = 0;
