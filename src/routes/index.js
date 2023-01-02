@@ -3,12 +3,15 @@ var adminRouter = require("./admin");
 var adminController = require("../controller/adminController");
 var factoryRouter = require("./factory");
 var storeRouter = require("./store");
+var serviceRouter = require("./service");
+
 var { verifyToken, verifyAdmin } = require("../middleware/jwtAction");
 
 let initWebRouter = (app) => {
   app.use("/admin", adminRouter);
   app.use("/factory", factoryRouter);
   app.use("/store", storeRouter);
+  app.use("/service", serviceRouter);
   app.post("/login", adminController.login);
   app.post("/changePassword", verifyToken, adminController.changePassword);
   app.get("/forgetPassword", adminController.forgetPassword);

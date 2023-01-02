@@ -178,38 +178,47 @@ let getProductInMonth = async (req, res) => {
   var year = req.body.year;
   var month = req.body.month;
   var status = req.body.status;
-
-  var count = await ProductHistoryModel.find({
+  var amount = 0;
+  var productHis = await ProductHistoryModel.find({
     userinid: data.id,
     createAt: {
       $gte: new Date(year, month - 1, 1),
       $lte: new Date(year, month, 1),
     },
     status: status,
-  }).count();
+  });
+  productHis.forEach(async function (product) {
+    var quantity = product.get("quantity");
+    amount += quantity;
+  });
   return res.json({
     errCode: 0,
     year: year,
     month: month,
-    amount: count,
+    amount: amount,
   });
 };
 let getProductInYear = async (req, res) => {
   var data = jwt.verify(req.cookies.token, process.env.secret);
   var year = req.body.year;
   var status = req.body.status;
-  var count = await ProductHistoryModel.find({
+  var amount = 0;
+  var productHis = await ProductHistoryModel.find({
     userinid: data.id,
     createAt: {
       $gte: new Date(year, 1, 1),
       $lte: new Date(year + 1, 1, 1),
     },
     status: status,
-  }).count();
+  });
+  productHis.forEach(async function (product) {
+    var quantity = product.get("quantity");
+    amount += quantity;
+  });
   return res.json({
     errCode: 0,
     year: year,
-    amount: count,
+    amount: amount,
   });
 };
 let getProductInQuarterly = async (req, res) => {
@@ -217,19 +226,25 @@ let getProductInQuarterly = async (req, res) => {
   var year = req.body.year;
   var quarter = req.body.quarter;
   var status = req.body.status;
-  var count = await ProductHistoryModel.find({
+  var amount = 0;
+  var productHis = await ProductHistoryModel.find({
     userinid: data.id,
     createAt: {
       $gte: new Date(year, (quarter - 1) * 3, 1),
       $lte: new Date(year, quarter * 3 + 1, 1),
     },
     status: status,
-  }).count();
+  });
+  productHis.forEach(async function (product) {
+    var quantity = product.get("quantity");
+    amount += quantity;
+  });
+
   return res.json({
     errCode: 0,
     year: year,
     quater: quarter,
-    amount: count,
+    amount: amount,
   });
 };
 let getProductOutMonth = async (req, res) => {
@@ -237,38 +252,47 @@ let getProductOutMonth = async (req, res) => {
   var year = req.body.year;
   var month = req.body.month;
   var status = req.body.status;
-
-  var count = await ProductHistoryModel.find({
+  var amount = 0;
+  var productHis = await ProductHistoryModel.find({
     useroutid: data.id,
     createAt: {
       $gte: new Date(year, month - 1, 1),
       $lte: new Date(year, month, 1),
     },
     status: status,
-  }).count();
+  });
+  productHis.forEach(async function (product) {
+    var quantity = product.get("quantity");
+    amount += quantity;
+  });
   return res.json({
     errCode: 0,
     year: year,
     month: month,
-    amount: count,
+    amount: amount,
   });
 };
 let getProductOutYear = async (req, res) => {
   var data = jwt.verify(req.cookies.token, process.env.secret);
   var year = req.body.year;
   var status = req.body.status;
-  var count = await ProductHistoryModel.find({
+  var amount = 0;
+  var productHis = await ProductHistoryModel.find({
     useroutid: data.id,
     createAt: {
       $gte: new Date(year, 1, 1),
       $lte: new Date(year + 1, 1, 1),
     },
     status: status,
-  }).count();
+  });
+  productHis.forEach(async function (product) {
+    var quantity = product.get("quantity");
+    amount += quantity;
+  });
   return res.json({
     errCode: 0,
     year: year,
-    amount: count,
+    amount: amount,
   });
 };
 let getProductOutQuarterly = async (req, res) => {
@@ -276,19 +300,24 @@ let getProductOutQuarterly = async (req, res) => {
   var year = req.body.year;
   var quarter = req.body.quarter;
   var status = req.body.status;
-  var count = await ProductHistoryModel.find({
+  var amount = 0;
+  var productHis = await ProductHistoryModel.find({
     useroutid: data.id,
     createAt: {
       $gte: new Date(year, (quarter - 1) * 3, 1),
       $lte: new Date(year, quarter * 3 + 1, 1),
     },
     status: status,
-  }).count();
+  });
+  productHis.forEach(async function (product) {
+    var quantity = product.get("quantity");
+    amount += quantity;
+  });
   return res.json({
     errCode: 0,
     year: year,
     quater: quarter,
-    amount: count,
+    amount: amount,
   });
 };
 module.exports = {
